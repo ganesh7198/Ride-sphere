@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { connectDb } from "./config/db.js";
+import authroutes from './routes/auth.routes.js'
 
 dotenv.config();
 
@@ -11,9 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
-  res.send("<h1>Hello World</h1>");
-});
+app.use("/api/v1/auth",authroutes);
 
 const PORT = process.env.PORT || 5000;
 
