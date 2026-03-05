@@ -69,6 +69,7 @@ const rideSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
+        unique:true
       },
     ],
 
@@ -77,14 +78,6 @@ const rideSchema = new mongoose.Schema(
       type: Number,
       default: 10,
     },
-
-
-    status: {
-      type: String,
-      enum: ["open", "closed", "completed"],
-      default: "open",
-    },
-
    
     rideType: {
       type: String,
