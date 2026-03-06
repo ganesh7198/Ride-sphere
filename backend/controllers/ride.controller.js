@@ -1,4 +1,5 @@
-import Ride from "../models/ride.model.js";
+import Ride from "../models/ride.models.js";
+import User from "../models/user.models.js"
 import { generateStaticMapUrl } from "../utils/generatestaticmapurl.js";
 import { getCoordinates } from "../utils/getcoordinates.js";
 import { getRouteDetails } from "../utils/getroutesdetails.js";
@@ -19,7 +20,7 @@ export const createRideController = async (req, res) => {
     } = req.body;
 
     
-    if (!tittle || !startLocationAddress || !endLocationAddress || !rideDate) {
+    if (!tittle || !startLocationAddress || !endLocationAddress || !rideDate || !rideType) {
       return res.status(400).json({
         success: false,
         message: "Please provide all required fields",
@@ -70,8 +71,8 @@ export const createRideController = async (req, res) => {
 
     
     const newRide = await Ride.create({
-      tittle,
-      creator: userId,
+       tittle,
+        createdBy: userId,
       description,
       rideType,
       maxRiders,
@@ -102,9 +103,9 @@ export const createRideController = async (req, res) => {
 
       distanceInKm: routeData.distanceInKm,
       estimatedDuration: routeData.durationInMinutes,
-      mapImage: mapUrl,
+      rideImage: mapUrl,
 
-      joinedMembers: [userId], 
+      joinedRiders: [userId], 
     });
 
     return res.status(201).json({
@@ -342,7 +343,7 @@ export const updateRideDetailsController = async (req, res) => {
     }
 
     const {
-      title,
+      tittle,
       startLocationAddress,
       endLocationAddress,
       maxRiders,
@@ -401,7 +402,7 @@ export const updateRideDetailsController = async (req, res) => {
     const updatedRide = await Ride.findByIdAndUpdate(
       rideId,
       {
-        title: title || ride.title,
+        tittle: tittle || ride.tittle,
         description: description || ride.description,
         rideType: rideType || ride.rideType,
         maxRiders: maxRiders || ride.maxRiders,
