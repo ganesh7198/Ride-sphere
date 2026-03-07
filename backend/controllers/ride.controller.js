@@ -1,5 +1,6 @@
 import Ride from "../models/ride.models.js";
 import User from "../models/user.models.js"
+import Notification from "../models/notification.models.js";
 import { generateStaticMapUrl } from "../utils/generatestaticmapurl.js";
 import { getCoordinates } from "../utils/getcoordinates.js";
 import { getRouteDetails } from "../utils/getroutesdetails.js";
@@ -197,36 +198,43 @@ export const joinedRidesByUserController = async (req, res) => {
   }
 };
 
-export const leaveRideController = async (req, res) => {
-  try {
-    const { rideId } = req.params;
-    const userId = req.user._id;
+export const leaveRideController = async (req,res)=>{
+  try{
 
-    const ride = await Ride.findByIdAndUpdate(
-      rideId,
-      { $pull: { joinedRiders: userId } },
-      { new: true } 
-    );
+    const {rideId}=req.params;
+    const userId=req.user._id;
 
-    if (!ride) {
+    const ride=await Ride.findById(rideId);
+
+    if(!ride){
       return res.status(404).json({
-        success: false,
-        message: "Ride not found",
+        success:false,
+        message:"Ride not found"
       });
     }
 
-    res.status(200).json({
-      success: true,
-      message: "Successfully left the ride",
-      ride,
+    ride.joinedRiders.pull(userId);
+    await ride.save();
+
+    await Notification.create({
+      sender:userId,
+      receiver:ride.createdBy,
+      type:"ride_leave",
+      ride:rideId
     });
 
-  } catch (error) {
-    console.log("Error in leaveRideController:", error.message);
+    res.status(200).json({
+      success:true,
+      message:"Successfully left ride",
+      ride
+    });
+
+  }catch(error){
+    console.log("Error in leaveRideController:",error.message);
 
     res.status(500).json({
-      success: false,
-      message: "Internal server error",
+      success:false,
+      message:"Internal server error"
     });
   }
 };
@@ -469,70 +477,89 @@ export const joinRideController = async (req, res) => {
 
     if (!ride) {
       return res.status(404).json({
-        success: false,
-        message: "No ride found",
+        success:false,
+        message:"Ride not found"
       });
     }
 
     if (ride.joinedRiders.includes(userId)) {
       return res.status(400).json({
-        success: false,
-        message: "User already joined this ride",
+        success:false,
+        message:"User already joined ride"
       });
     }
 
-    const joinRide = await Ride.findByIdAndUpdate(
-      rideId,
-      { $push: { joinedRiders: userId } },
-      { new: true }
-    );
+    if (ride.joinedRiders.length >= ride.maxRiders) {
+      return res.status(400).json({
+        success:false,
+        message:"Ride is full"
+      });
+    }
+
+    ride.joinedRiders.push(userId);
+    await ride.save();
+
+    await Notification.create({
+      sender:userId,
+      receiver:ride.createdBy,
+      type:"ride_join",
+      ride:rideId
+    });
 
     res.status(200).json({
-      success: true,
-      message: "Rider joined successfully",
-      joinRide,
+      success:true,
+      message:"Ride joined successfully",
+      ride
     });
+
   } catch (error) {
-    console.log("Error in joinRideController:", error.message);
+    console.log("Error in joinRideController:",error.message);
 
     res.status(500).json({
-      success: false,
-      message: "Internal server error",
+      success:false,
+      message:"Internal server error"
     });
   }
 };
 
-export const updateRiderHistoryController = async (req, res) => {
-  try {
-    const { rideId } = req.params;
-    const { riders } = req.body; 
-    // riders = ["userId1", "userId2", "userId3"]
+export const updateRiderHistoryController = async (req,res)=>{
+  try{
 
-    if (!riders || riders.length === 0) {
+    const {rideId}=req.params;
+    const {riders}=req.body;
+
+    if(!riders || riders.length===0){
       return res.status(400).json({
-        success: false,
-        message: "No riders provided",
+        success:false,
+        message:"No riders provided"
       });
     }
 
     await User.updateMany(
-      { _id: { $in: riders } }, 
-      {
-        $addToSet: { completedRides: rideId },
-      }
+      {_id:{$in:riders}},
+      {$addToSet:{completedRides:rideId}}
     );
 
+    const notifications=riders.map(rider=>({
+      sender:req.user._id,
+      receiver:rider,
+      type:"ride_completed",
+      ride:rideId
+    }));
+
+    await Notification.insertMany(notifications);
+
     res.status(200).json({
-      success: true,
-      message: "Ride added to riders history",
+      success:true,
+      message:"Ride completed and history updated"
     });
 
-  } catch (error) {
-    console.log("error in update rider history controller", error.message);
+  }catch(error){
+    console.log("Error updating rider history:",error.message);
 
     res.status(500).json({
-      success: false,
-      message: "internal server error",
+      success:false,
+      message:"Internal server error"
     });
   }
 };
