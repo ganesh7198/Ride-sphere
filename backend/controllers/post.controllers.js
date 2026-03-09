@@ -1,5 +1,6 @@
 import cloudinary from '../config/cloudinary.js';
 import Post from '../models/post.models.js'
+import Notification from '../models/notification.models.js';
 import fs from 'fs'
 
 export const createPostController = async (req, res) => {
@@ -200,7 +201,13 @@ export const likeThePost = async (req, res) => {
         { $pull: { likes: userId } },
         { new: true }
       ).populate("user");
+         
 
+      const notification= await Notification.create({
+        sender:userId,
+        receiver:disLikePost.user,
+        type:"ride_like"
+      })
       return res.status(200).json({
         success: true,
         message: "Post unliked",
@@ -215,6 +222,11 @@ export const likeThePost = async (req, res) => {
         { $push: { likes: userId } },
         { new: true }
       ).populate("user");
+      const notification= await Notification.create({
+        sender:userId,
+        receiver:likedPost.user,
+        type:"ride_dislike"
+      })
 
       return res.status(200).json({
         success: true,
