@@ -21,8 +21,9 @@ const notificationSchema = new mongoose.Schema(
       "unfollow",
       "ride_join",
       "ride_leave",
-      "ride_comment",
-      "ride_like"
+      "like_the_post",
+      "ride_like",
+      "invite_for_the_ride",
     ],
     required: true
   },

@@ -1,4 +1,5 @@
 import Ride from "../models/ride.models.js";
+import Notification from "../models/notification.models.js";
 import User from "../models/user.models.js"
 import Notification from "../models/notification.models.js";
 import { generateStaticMapUrl } from "../utils/generatestaticmapurl.js";
@@ -601,5 +602,87 @@ export const nearByRide = async (req, res) => {
       success: false,
       message: "internal server error",
     });
+  }
+};
+
+export const createNotificationForInvitedUser = async (req, res) => {
+  try {
+
+    const { invitedUSerId, rideId } = req.params;
+
+    const ride = await Ride.findById(rideId);
+
+    if (!ride) {
+      return res.status(404).json({
+        success: false,
+        message: "No ride found"
+      });
+    }
+
+    await Notification.create({
+      sender: req.user._id,
+      receiver: invitedUSerId,
+      type: "invite_for_the_ride",
+      ride: rideId
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Notification created"
+    });
+
+  } catch (error) {
+    console.log("error in invite controller", error.message);
+
+    res.status(500).json({
+      success: false,
+      message: "Internal server error"
+    });
+  }
+};
+
+export const joinInvitedUser = async (req, res) => {
+  try {
+
+    const { rideId } = req.params;
+
+    const ride = await Ride.findById(rideId);
+
+    if (!ride) {
+      return res.status(404).json({
+        success: false,
+        message: "Ride not found"
+      });
+    }
+
+    // prevent duplicate joining
+    if (ride.joinedRiders.includes(req.user._id)) {
+      return res.status(400).json({
+        success: false,
+        message: "You already joined this ride"
+      });
+    }
+
+    const updatedRide = await Ride.findByIdAndUpdate(
+      rideId,
+      { $push: { joinedRiders: req.user._id } },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Invited user joined successfully",
+      ride: updatedRide
+    });
+
+  } catch (error) {
+
+    console.log("error in joinInvitedUser", error.message);
+
+    res.status(500).json({
+      success: false,
+      message: "Internal server error"
+    });
+
   }
 };

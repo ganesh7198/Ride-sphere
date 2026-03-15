@@ -42,6 +42,7 @@ export const createPostController = async (req, res) => {
     });
   }
 };
+
 export const getAllPost = async (req, res) => {
   try {
 
@@ -202,12 +203,6 @@ export const likeThePost = async (req, res) => {
         { new: true }
       ).populate("user");
          
-
-      const notification= await Notification.create({
-        sender:userId,
-        receiver:disLikePost.user,
-        type:"ride_like"
-      })
       return res.status(200).json({
         success: true,
         message: "Post unliked",
@@ -225,7 +220,7 @@ export const likeThePost = async (req, res) => {
       const notification= await Notification.create({
         sender:userId,
         receiver:likedPost.user,
-        type:"ride_dislike"
+        type:"like_the_post"
       })
 
       return res.status(200).json({
