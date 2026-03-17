@@ -1,7 +1,7 @@
 import express from 'express'
 import upload from '../middlewares/multer.middlewares.js';
 import { protectedRoute } from '../utils/protectedroute.js';
-import { commentInThePost, createPostController, deleteCommmentOnThePost, deletePostByUser, getAllPost, getAllPostByUser, getSinglePost, likeThePost, updatePostController } from '../controllers/post.controllers.js';
+import { commentInThePost, createPostController, deleteCommmentOnThePost, deletePostByUser, followAndUnfollow, getAllPost, getAllPostByUser, getSinglePost, likeThePost, updatePostController } from '../controllers/post.controllers.js';
 
 const router=express.Router();
 
@@ -14,6 +14,7 @@ router.post("/likepost/:postId",protectedRoute,likeThePost);
 router.delete("/deletecomment/:postId/:commentId",protectedRoute,deleteCommmentOnThePost);
 router.post("/updatepost/:postId",protectedRoute,updatePostController);
 router.get("/getsinglepost/:postId",protectedRoute,getSinglePost)
+router.post("/follow/unfollow",protectedRoute,followAndUnfollow)
 
 
 export default router;
