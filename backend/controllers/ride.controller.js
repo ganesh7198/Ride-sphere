@@ -1,5 +1,4 @@
 import Ride from "../models/ride.models.js";
-import Notification from "../models/notification.models.js";
 import User from "../models/user.models.js"
 import Notification from "../models/notification.models.js";
 import { generateStaticMapUrl } from "../utils/generatestaticmapurl.js";
@@ -134,6 +133,20 @@ export const getAllRideController= async (req,res)=>{
    console.log("error in the get all ride controller ",error.message);
    res.status(500).json({success:false,message:"intrnal server error"})
   }
+
+}
+
+export const incommingRideController=async(req,res)=>{
+   try{
+    const incommingride=Ride.find({status:"upcoming"});
+    if(!incommingride.lenght()===0){
+      return res.status(404).json({success:false,message:"no ride found"});
+    }
+    res.status(200).json({success:true,message:"incomming ride ",incommingride})
+   }catch(error){
+     console.log("error in the incomming ride controller ",error.message);
+     res.status(500).json({success:false,message:"intrnal server error "});
+   }
 }
 
 export const getSingleRideController = async (req, res) => {

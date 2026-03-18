@@ -1,4 +1,4 @@
-import cloudinary from "../config/cloudinary";
+import cloudinary from "../config/cloudinary.js";
 import fs from 'fs';
 import Discussion from "../models/discussion.models.js";
 
