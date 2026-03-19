@@ -1,7 +1,21 @@
+import  {Route, Routes }from 'react-router-dom'
+import LandingPage from '../pages/LandingPage';
+import LoginForm from '../pages/LoginForm';
+import SignupForm from '../pages/SignupForm';
+import HomePage from '../pages/HomePage';
 function App() {
+
   return (
     <>
-      <h1 className="text-2xl">hello world </h1>
+   
+     <Routes>
+   <Route path='/*/' element={<LandingPage/>}></Route>
+   <Route path='/login' element={<LoginForm></LoginForm>}></Route>
+   <Route path='/sign' element={<SignupForm></SignupForm>}></Route>
+   <Route path="/" element={<HomePage></HomePage>}></Route>
+
+     </Routes>
+    
     </>
   );
 }

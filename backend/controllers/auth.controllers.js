@@ -10,7 +10,6 @@ export const signupController = async (req, res) => {
 
     let profileImgUrl = "";
 
-    // ✅ Required fields check
     if (!username || !fullname || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -18,7 +17,6 @@ export const signupController = async (req, res) => {
       });
     }
 
-    // ✅ Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({
@@ -26,8 +24,6 @@ export const signupController = async (req, res) => {
         message: "Invalid email format",
       });
     }
-
-    // ✅ Check if username OR email exists
     const existedUser = await User.findOne({
       $or: [{ username }, { email }],
     });
@@ -39,7 +35,6 @@ export const signupController = async (req, res) => {
       });
     }
 
-    // ✅ Upload image if exists
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "biker-app",
@@ -50,13 +45,9 @@ export const signupController = async (req, res) => {
       fs.unlinkSync(req.file.path); 
     }
 
-    // ✅ Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-
-
-    // ✅ Create new user
     const newUser = new User({
       username,
       fullName: fullname, 
@@ -68,7 +59,6 @@ export const signupController = async (req, res) => {
 
     await newUser.save();
 
-	// Generate JWT Token 
       generateTokenAndSetCookie(newUser._id,res);
 
     res.status(201).json({
@@ -103,7 +93,6 @@ export const loginController = async (req, res) => {
       });
     }
 
-    // Find user
     const existedUser = await User.findOne({ email });
 
     if (!existedUser) {
