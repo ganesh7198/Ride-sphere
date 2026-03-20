@@ -1,9 +1,10 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useContext } from "react";
 import { validateLogin } from "../utils/validation";
 import { Link, useNavigate } from "react-router-dom";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 import axios from 'axios';
 import { API_PATHS, BASE_URL } from "../utils/Apipath";
+import { AuthContext } from "../context/AuthContext";
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ function LoginForm() {
 const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const {setUser}=useContext(AuthContext);
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -41,11 +43,10 @@ const handleSubmit = useCallback(
         `${BASE_URL}${API_PATHS.AUTH.LOGIN}`,
         formData,
         { withCredentials: true }
-      );
-
-      console.log(response.data); 
+      ); 
+      setUser(response.data.user)
       if(response.data.success===true){
-         navigate("/");
+         navigate("/home");
       }
       
     } catch (error) {
@@ -55,7 +56,7 @@ const handleSubmit = useCallback(
       });
     }
   },
-  [formData,navigate]
+  [formData,navigate,setUser]
 );
 
   return (

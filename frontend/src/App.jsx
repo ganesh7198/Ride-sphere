@@ -1,22 +1,65 @@
-import  {Route, Routes }from 'react-router-dom'
-import LandingPage from '../pages/LandingPage';
-import LoginForm from '../pages/LoginForm';
-import SignupForm from '../pages/SignupForm';
-import HomePage from '../pages/HomePage';
+import { Route, Routes, Navigate } from "react-router-dom";
+import LandingPage from "../pages/LandingPage";
+import LoginForm from "../pages/LoginForm";
+import SignupForm from "../pages/SignupForm";
+import HomePage from "../pages/HomePage";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import MainLayout from "../components/MainLayout";
+import DetailedRideCard from "../cards/detailedRideCard";
+
 function App() {
-
+  const { user, loading } = useContext(AuthContext);
+  if (loading) {
+    return <div className="text-center mt-10">Loading...</div>;
+  }
+  const PublicRoute = ({ children }) => {
+    return user ? <Navigate to="/home" /> : children;
+  };  
+  const PrivateRoute = ({ children }) => {
+    return user ? children : <Navigate to="/login" />;
+  };
   return (
-    <>
-   
-     <Routes>
-   <Route path='/*/' element={<LandingPage/>}></Route>
-   <Route path='/login' element={<LoginForm></LoginForm>}></Route>
-   <Route path='/sign' element={<SignupForm></SignupForm>}></Route>
-   <Route path="/" element={<HomePage></HomePage>}></Route>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <PublicRoute>
+            <LandingPage />
+          </PublicRoute>
+        }
+      />
 
-     </Routes>
-    
-    </>
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <LoginForm />
+          </PublicRoute>
+        }
+      />
+
+      <Route
+        path="/sign"
+        element={
+          <PublicRoute>
+            <SignupForm />
+          </PublicRoute>
+        }
+      />
+
+      <Route
+        path="/home"
+        element={
+          <PrivateRoute>
+            <MainLayout></MainLayout>
+          </PrivateRoute>
+        }
+      >
+        <Route index element={<HomePage></HomePage>}></Route>
+        <Route path="ride/:id" element={<DetailedRideCard></DetailedRideCard>}></Route>
+      </Route>
+    </Routes>
   );
 }
 

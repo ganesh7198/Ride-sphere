@@ -124,30 +124,30 @@ export const createRideController = async (req, res) => {
   }
 };
 
-export const getAllRideController= async (req,res)=>{
-  try{
-	//  need to rewrite this controller may be i will more  redefined/more sepicific it 
-      const allRides=await Ride.find({status:{$ne:"completed"}}).sort({rideDate:1});
-	  res.status(200).json({success:true,message:"all rides available", ride:allRides})
-  }catch(error){
-   console.log("error in the get all ride controller ",error.message);
-   res.status(500).json({success:false,message:"intrnal server error"})
+export const getAllRideController = async (req, res) => {
+  try {
+    const currentDate = new Date();
+
+    const allrides = await Ride.find({
+      rideDate: { $gt: currentDate }, 
+    })
+      .sort({ rideDate: 1 })
+      .populate("createdBy", "username profileImg");
+
+    res.status(200).json({
+      success: true,
+      message: "upcoming rides only",
+      ride: allrides,
+    });
+  } catch (error) {
+    console.log("error in getAllRideController", error.message);
+    res.status(500).json({
+      success: false,
+      message: "internal server error",
+    });
   }
+};
 
-}
-
-export const incommingRideController=async(req,res)=>{
-   try{
-    const incommingride=Ride.find({status:"upcoming"});
-    if(!incommingride.lenght()===0){
-      return res.status(404).json({success:false,message:"no ride found"});
-    }
-    res.status(200).json({success:true,message:"incomming ride ",incommingride})
-   }catch(error){
-     console.log("error in the incomming ride controller ",error.message);
-     res.status(500).json({success:false,message:"intrnal server error "});
-   }
-}
 
 export const getSingleRideController = async (req, res) => {
   try {

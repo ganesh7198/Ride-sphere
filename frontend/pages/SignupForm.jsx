@@ -1,9 +1,10 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useContext } from "react";
 import { validateSignup } from "../utils/validation";
 import { Link, useNavigate } from "react-router-dom";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 import axios from "axios";
 import { API_PATHS, BASE_URL } from "../utils/Apipath";
+import { AuthContext } from "../context/AuthContext";
 
 function SignupForm() {
   const navigate=useNavigate()
@@ -14,6 +15,8 @@ function SignupForm() {
     password: "",
     profileImg: "",
   });
+
+  const {setUser}=useContext(AuthContext)
 
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -80,11 +83,9 @@ function SignupForm() {
            },
          }
        );
-
-       console.log(response.data);
-
+        setUser(response.data.user)
        if (response.data.success) {
-         navigate("/");
+         navigate("/home");
        }
      } catch (error) {
        console.log(error);
