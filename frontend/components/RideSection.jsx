@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import axios from "axios";
 import { API_PATHS, BASE_URL } from "../utils/Apipath";
 import RideCard from '../cards/RideCard'
@@ -43,7 +43,7 @@ function RidesSection() {
     <div>
       <h2 className="text-xl font-semibold mb-4">Upcoming Rides</h2>
 
-      <div className="space-y-4">
+      <div className="space-y-4 -z-10">
         {rides.map((ride) => (
           <RideCard key={ride._id} ride={ride} />
         ))}
@@ -52,4 +52,4 @@ function RidesSection() {
   );
 }
 
-export default RidesSection;
+export default memo(RidesSection);

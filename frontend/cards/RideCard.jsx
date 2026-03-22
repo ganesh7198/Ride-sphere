@@ -1,32 +1,30 @@
 import { useNavigate } from "react-router-dom";
+import RideMap from "../components/RideMap";
 
 function RideCard({ ride }) {
   const navigate = useNavigate();
 
   return (
-    <div
-      onClick={() => navigate(`/ride/${ride._id}`)}
-      className="bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition"
-    >
-      {/* 🖼️ Image */}
-      <div className="h-48 w-full">
-        <img
-          src={ride.rideImage}
-          alt="ride"
-          className="w-full h-full object-cover"
-        />
-      </div>
+    <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+      {/* 🗺️ Map */}
+      <RideMap ride={ride} />
 
       {/* 📄 Content */}
       <div className="p-4 space-y-3">
         {/* 👤 Creator Info */}
         <div className="flex items-center gap-3">
           <img
-            src={ride.createdBy?.profileImg || "/default-avatar.png"}
+            src={
+              ride.createdBy?.profileImg ||
+              "https://api.dicebear.com/7.x/initials/svg?seed=User"
+            }
             alt="user"
             className="h-8 w-8 rounded-full object-cover"
           />
-          <span className="text-sm font-medium">
+          <span
+            className="text-sm font-medium cursor-pointer hover:underline"
+            onClick={() => navigate(`/home/profile/${ride.createdBy?._id}`)}
+          >
             {ride.createdBy?.username || "Unknown User"}
           </span>
         </div>
@@ -55,12 +53,19 @@ function RideCard({ ride }) {
           📅 {new Date(ride.rideDate).toDateString()}
         </p>
 
-        {/* 🏍 Ride Type + Status */}
-        <div className="flex gap-2">
+        {/* 🏍 Ride Type */}
+        <div className="flex justify-between items-center">
           <span className="text-xs bg-amber-100 text-amber-600 px-2 py-1 rounded">
             {ride.rideType}
           </span>
-         
+
+          {/* 🔥 Button */}
+          <button
+            onClick={() => navigate(`/home/ride/${ride._id}`)}
+            className="bg-amber-500 text-white px-4 py-1 rounded-lg text-sm hover:bg-amber-600 transition"
+          >
+            View Details
+          </button>
         </div>
       </div>
     </div>

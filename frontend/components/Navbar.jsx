@@ -3,12 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { API_PATHS, BASE_URL } from "../utils/Apipath";
-import {
-  HiChevronDown,
-  HiLogout,
-  HiUser,
-  HiCog,
-} from "react-icons/hi";
+import { HiChevronDown, HiLogout, HiUser, HiCog } from "react-icons/hi";
 
 function Navbar() {
   const { user, setUser } = useContext(AuthContext);
@@ -30,7 +25,6 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  
   useEffect(() => {
     const handleClick = (e) => {
       if (!dropdownRef.current?.contains(e.target)) {
@@ -83,11 +77,13 @@ function Navbar() {
             >
               <div className="relative">
                 <img
-                  src={user?.profileImg || "https://via.placeholder.com/40"}
+                  src={
+                    user?.profileImg ||
+                    "https://api.dicebear.com/7.x/initials/svg?seed=User"
+                  }
                   alt="profile"
                   className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover border-2 border-gray-200 group-hover:border-green-600 transition-all duration-200"
                 />
-                
               </div>
               <HiChevronDown
                 size={16}
@@ -104,7 +100,10 @@ function Navbar() {
                 <div className="px-4 py-3 border-b border-gray-100">
                   <div className="flex items-center gap-3">
                     <img
-                      src={user?.profileImg || "https://via.placeholder.com/40"}
+                      src={
+                        user?.profileImg ||
+                        "https://api.dicebear.com/7.x/initials/svg?seed=User"
+                      }
                       alt="profile"
                       loading="lazy"
                       className="w-10 h-10 rounded-full object-cover border-2 border-gray-200"
@@ -125,23 +124,12 @@ function Navbar() {
                   <button
                     onClick={() => {
                       setOpen(false);
-                      navigate("/profile");
+                      navigate("/home/Myprofile");
                     }}
                     className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                   >
                     <HiUser size={18} className="text-gray-500" />
                     <span>My Profile</span>
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setOpen(false);
-                      navigate("/settings");
-                    }}
-                    className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    <HiCog size={18} className="text-gray-500" />
-                    <span>Settings</span>
                   </button>
                 </div>
 

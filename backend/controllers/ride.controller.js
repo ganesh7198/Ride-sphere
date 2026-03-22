@@ -4,6 +4,7 @@ import Notification from "../models/notification.models.js";
 import { generateStaticMapUrl } from "../utils/generatestaticmapurl.js";
 import { getCoordinates } from "../utils/getcoordinates.js";
 import { getRouteDetails } from "../utils/getroutesdetails.js";
+import { io } from "../server.js";
 
 
 export const createRideController = async (req, res) => {
@@ -106,7 +107,7 @@ export const createRideController = async (req, res) => {
       estimatedDuration: routeData.durationInMinutes,
       rideImage: mapUrl,
 
-      joinedRiders: [userId], 
+      joinedRiders:userId, 
     });
 
     return res.status(201).json({
@@ -286,6 +287,8 @@ export const ridesCreatedByUserController = async (req, res) => {
   }
 };
 
+
+
 export const addCommentInTheRideController = async (req, res) => {
   try {
     const { text } = req.body;
@@ -311,31 +314,32 @@ export const addCommentInTheRideController = async (req, res) => {
     const newComment = {
       userId,
       text,
+      createdAt: new Date(),
     };
 
     ride.comments.push(newComment);
-
     await ride.save();
+
+    // 🔥 REAL-TIME EMIT
+    io.to(rideId).emit("newMessage", {
+      rideId,
+      message: newComment,
+    });
 
     res.status(200).json({
       success: true,
-      message: "Comment added successfully",
+      message: "Message sent",
       comment: newComment,
     });
 
   } catch (error) {
-    console.log(
-      "Error in addCommentInTheRideController:",
-      error.message
-    );
-
+    console.log(error.message);
     res.status(500).json({
       success: false,
       message: "Internal server error",
     });
   }
 };
-
 export const updateRideDetailsController = async (req, res) => {
   try {
     const { rideId } = req.params;

@@ -15,6 +15,7 @@ function AuthProvider({ children }) {
           `${BASE_URL}${API_PATHS.AUTH.MY_PROFILE}`,
           { withCredentials: true }
         );
+        console.log(data.data.userInfo);
         if (data.data.success) {
           setUser(data.data.userInfo);
         } else {

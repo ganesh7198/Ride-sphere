@@ -7,6 +7,8 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import MainLayout from "../components/MainLayout";
 import DetailedRideCard from "../cards/detailedRideCard";
+import Profile from "../components/Profile";
+import MyProfile from "../pages/MyProfile";
 
 function App() {
   const { user, loading } = useContext(AuthContext);
@@ -58,6 +60,9 @@ function App() {
       >
         <Route index element={<HomePage></HomePage>}></Route>
         <Route path="ride/:id" element={<DetailedRideCard></DetailedRideCard>}></Route>
+        <Route path="profile/:id" element={<Profile></Profile>}></Route>
+        <Route path="myprofile" element={<MyProfile></MyProfile>}></Route>
+        
       </Route>
     </Routes>
   );

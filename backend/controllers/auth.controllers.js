@@ -135,7 +135,7 @@ export const loginController = async (req, res) => {
 
 export const myprofileController = async (req, res) => {
   try {
-    const userId = req.user._id;
+   const userId = req.user._id;
 
     const user = await User.findById(userId)
       .select("-password")
@@ -156,6 +156,32 @@ export const myprofileController = async (req, res) => {
 
   } catch (error) {
     console.log("Error in myProfile controller:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+export const userProfileController = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const userProfile = await User.findById(userId).select("-password"); 
+
+    if (!userProfile) {
+      return res.status(404).json({
+        success: false,
+        message: "Profile not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "User profile",
+      user: userProfile,
+    });
+  } catch (error) {
+    console.log("Error in user profile controller:", error.message);
     res.status(500).json({
       success: false,
       message: "Internal server error",

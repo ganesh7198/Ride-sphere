@@ -44,6 +44,7 @@ const handleSubmit = useCallback(
         formData,
         { withCredentials: true }
       ); 
+      console.log(response.data.user)
       setUser(response.data.user)
       if(response.data.success===true){
          navigate("/home");
