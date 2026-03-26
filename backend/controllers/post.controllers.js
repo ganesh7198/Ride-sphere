@@ -45,14 +45,14 @@ export const createPostController = async (req, res) => {
 
 export const getAllPost = async (req, res) => {
   try {
-
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
-
     const skip = (page - 1) * limit;
 
     const posts = await Post.find()
       .populate("user", "username profileImg")
+      .populate("likes", "username profileImg")
+      .populate("comment.user", "username profileImg") // ✅ FIXED
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
@@ -64,21 +64,18 @@ export const getAllPost = async (req, res) => {
       page,
       totalPages: Math.ceil(totalPosts / limit),
       totalPosts,
-      posts
+      posts,
     });
 
   } catch (error) {
-
     console.log("Error in getAllPost:", error.message);
 
     res.status(500).json({
       success: false,
-      message: "Internal server error"
+      message: "Internal server error",
     });
-
   }
 };
-
 export const getAllPostByUser=async (req,res)=>{
    try{
        const userId=req.user._id;
@@ -200,7 +197,7 @@ export const likeThePost = async (req, res) => {
       const disLikePost = await Post.findByIdAndUpdate(
         postId,
         { $pull: { likes: userId } },
-        { new: true }
+        { returnDocument: "after" } 
       ).populate("user");
          
       return res.status(200).json({
@@ -215,7 +212,7 @@ export const likeThePost = async (req, res) => {
       const likedPost = await Post.findByIdAndUpdate(
         postId,
         { $push: { likes: userId } },
-        { new: true }
+       { returnDocument: "after" } 
       ).populate("user");
       const notification= await Notification.create({
         sender:userId,
@@ -244,7 +241,6 @@ export const likeThePost = async (req, res) => {
 
 export const deleteCommmentOnThePost = async (req, res) => {
   try {
-
     const { postId, commentId } = req.params;
     const userId = req.user._id;
 
@@ -257,8 +253,17 @@ export const deleteCommmentOnThePost = async (req, res) => {
       });
     }
 
- 
-    const comment = post.comments.id(commentId);
+    // FIX: Use 'comment' instead of 'comments' (singular vs plural)
+    // Check if post.comment exists and is an array
+    if (!post.comment || !Array.isArray(post.comment)) {
+      return res.status(404).json({
+        success: false,
+        message: "Comments not found on this post"
+      });
+    }
+
+    // Find the comment in the 'comment' array
+    const comment = post.comment.id(commentId);
 
     if (!comment) {
       return res.status(404).json({
@@ -267,7 +272,7 @@ export const deleteCommmentOnThePost = async (req, res) => {
       });
     }
 
-    
+    // Check if user owns the comment
     if (comment.user.toString() !== userId.toString()) {
       return res.status(403).json({
         success: false,
@@ -275,10 +280,10 @@ export const deleteCommmentOnThePost = async (req, res) => {
       });
     }
 
-    
+    // FIX: Use $pull on 'comment' array (not 'comments')
     await Post.findByIdAndUpdate(
       postId,
-      { $pull: { comments: { _id: commentId } } },
+      { $pull: { comment: { _id: commentId } } },
       { new: true }
     );
 
@@ -288,17 +293,13 @@ export const deleteCommmentOnThePost = async (req, res) => {
     });
 
   } catch (error) {
-
     console.log("error in delete comment controller", error.message);
-
     res.status(500).json({
       success: false,
       message: "Internal server error"
     });
-
   }
 };
-
 export const updatePostController= async(req,res)=>{
  try{
      
@@ -314,7 +315,9 @@ export const getSinglePost = async (req, res) => {
 
     const { postId } = req.params;
 
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId).populate("user", "username profileImg")
+      .populate("likes", "username profileImg")
+      .populate("comment.user", "username profileImg");
 
     if (!post) {
       return res.status(404).json({

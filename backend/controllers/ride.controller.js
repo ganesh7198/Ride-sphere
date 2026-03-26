@@ -155,10 +155,15 @@ export const getSingleRideController = async (req, res) => {
     const { rideID } = req.params;
 
     const rideDetails = await Ride.findById(rideID)
-      .populate("createdBy")
-      .populate("joinedRiders")
-      .populate("comments")
-    ;
+      .populate("createdBy", "username profileImg")
+      .populate("joinedRiders", "username profileImg")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "user",
+          select: "username profileImg",
+        },
+      });
 
     if (!rideDetails) {
       return res
