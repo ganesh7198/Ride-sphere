@@ -1,11 +1,13 @@
 import express from 'express'
 import { protectedRoute } from '../utils/protectedroute.js';
 import upload from '../middlewares/multer.middlewares.js';
-import { createDiscussion ,getAllDiscussions,deleteDiscussion,addComment , upvoteDiscussion , downvoteDiscussion ,deleteComment , userDiscussion} from '../controllers/discussion.controllers.js';
+import { createDiscussion,getSingleDiscussion ,getAllDiscussions,deleteDiscussion,addComment , upvoteDiscussion , downvoteDiscussion ,deleteComment , userDiscussion} from '../controllers/discussion.controllers.js';
 
 const router =express.Router();
 
 router.post("/create", protectedRoute, upload.single("img") ,createDiscussion)
+
+router.get("/singlediscussion/:discussionId",protectedRoute,getSingleDiscussion)
 
 router.get("/all", protectedRoute, getAllDiscussions)
 

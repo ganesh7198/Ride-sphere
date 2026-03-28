@@ -191,7 +191,7 @@ export const joinedRidesByUserController = async (req, res) => {
 
     const joinedRide = await Ride.find({
       joinedRiders: userId,
-    }).populate("createdBy", "username email");
+    }).populate("createdBy", "username email").sort({createdAt:-1});
 
     if (joinedRide.length === 0) {
       return res.status(404).json({

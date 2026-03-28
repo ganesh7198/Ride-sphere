@@ -22,7 +22,7 @@ function RideCard({ ride }) {
             className="h-8 w-8 rounded-full object-cover"
           />
           <span
-            className="text-sm font-medium cursor-pointer hover:underline"
+            className="text-sm font-medium cursor-pointer hover:underline hover:text-amber-600"
             onClick={() => navigate(`/home/profile/${ride.createdBy?._id}`)}
           >
             {ride.createdBy?.username || "Unknown User"}

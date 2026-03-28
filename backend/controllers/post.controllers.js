@@ -300,15 +300,36 @@ export const deleteCommmentOnThePost = async (req, res) => {
     });
   }
 };
-export const updatePostController= async(req,res)=>{
- try{
-     
-   
-  }catch(error){
-console.log('error in the update post  controller',error.message);
-res.status(500).json({success:false,message:"intrnal server error "});
+export const updatePostController = async (req, res) => {
+  try {
+    const { text } = req.body; // ✅ match frontend
+    const { postId } = req.params;
+
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      { $set: { text } },
+      { new: true } // ✅ return updated doc
+    );
+
+    if (!updatedPost) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No post found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Post updated successfully",
+      post: updatedPost, 
+    });
+  } catch (error) {
+    console.log("error in update post controller", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
-}
+};
 
 export const getSinglePost = async (req, res) => {
   try {

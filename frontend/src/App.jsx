@@ -9,8 +9,10 @@ import MainLayout from "../components/MainLayout";
 import DetailedRideCard from "../cards/detailedRideCard";
 import Profile from "../components/Profile";
 import MyProfile from "../pages/MyProfile";
-import AllPost from "../components/AllPost";
 import PostSection from "../components/PostSection";
+import DetailedDisccussion from "../cards/DetailedDisccussion";
+import Notification from "../pages/Notification"
+import ActivityPage from "../pages/ActivityPage";
 
 function App() {
   const { user, loading } = useContext(AuthContext);
@@ -61,11 +63,16 @@ function App() {
         }
       >
         <Route index element={<HomePage></HomePage>}></Route>
-        <Route path="ride/:id" element={<DetailedRideCard></DetailedRideCard>}></Route>
+        <Route
+          path="ride/:id"
+          element={<DetailedRideCard></DetailedRideCard>}
+        ></Route>
         <Route path="profile/:id" element={<Profile></Profile>}></Route>
         <Route path="myprofile" element={<MyProfile></MyProfile>}></Route>
         <Route path="post/:id" element={<PostSection></PostSection>}></Route>
-        
+        <Route path="discussion/:id" element={<DetailedDisccussion></DetailedDisccussion>}></Route>
+        <Route path="notifications" element={<Notification></Notification>}></Route>
+        <Route path="activity" element={<ActivityPage></ActivityPage>}></Route>
       </Route>
     </Routes>
   );

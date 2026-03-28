@@ -1,7 +1,7 @@
 import { useState } from "react";
 import RidesSection from "../components/RideSection";
-import PostSection from "../components/PostSection";
 import AllPost from "../components/AllPost";
+import AllDisccussion from "../components/AllDisccussion";
 
 function HomePage() {
   const [activeTab, setActiveTab] = useState("rides");
@@ -27,7 +27,7 @@ function HomePage() {
 
       {activeTab == "rides" && <RidesSection></RidesSection>}
       {activeTab == "posts" && <AllPost ></AllPost>}
-      {activeTab == "discussions" && <h1>discussion</h1>}
+      {activeTab == "discussions" && <AllDisccussion></AllDisccussion>}
     </div>
   );
 }

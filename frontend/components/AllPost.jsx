@@ -37,9 +37,9 @@ function AllPost() {
     }
   };
 
-  // ❤️ Like / Unlike
+
   const handleLike = async (e, postId) => {
-    e.stopPropagation(); // 🚫 prevent navigation
+    e.stopPropagation(); 
 
     const post = posts.find((p) => p._id === postId);
    const isLiked = post.likes.some(
@@ -48,7 +48,6 @@ function AllPost() {
        like?.toString() === user?._id?.toString()
    );
 
-    // 🔥 instant UI update
     setPosts((prev) =>
       prev.map((p) =>
         p._id === postId
@@ -96,7 +95,7 @@ function AllPost() {
                 src={post.user?.profileImg || "/default-avatar.png"}
                 className="w-8 h-8 rounded-full"
               />
-              <span className="text-sm font-medium">{post.user?.username}</span>
+              <span onClick={()=> navigate(`/home/profile/${post.user?._id}`)} className="text-sm font-medium hover:text-amber-600">{post.user?.username}</span>
             </div>
 
             {/* TEXT */}

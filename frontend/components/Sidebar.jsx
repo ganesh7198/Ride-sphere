@@ -6,7 +6,7 @@ function Sidebar() {
 
   const menu = [
     { name: "Home", path: "/home", icon: <HiHome size={24} /> },
-    { name: "Explore", path: "/home/explore", icon: <HiGlobeAlt size={24} /> },
+    { name: "Activity", path: "/home/activity", icon: <HiGlobeAlt size={24} /> },
     { name: "Create", path: "/home/create", icon: <HiPlusCircle size={24} /> },
     {
       name: "Notifications",

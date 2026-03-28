@@ -53,9 +53,11 @@ export const createDiscussion = async (req, res) => {
 
 export const getAllDiscussions = async (req, res) => {
   try {
-    const discussions = await Discussion.find({}).sort({ createdAt: -1 });
+    const discussions = await Discussion.find({})
+      .populate("creator", "username profileImg") 
+      .sort({ createdAt: -1 });
 
-    if (discussions.length === 0) {
+    if (!discussions.length) {
       return res.status(404).json({
         success: false,
         message: "No discussions found",
@@ -69,7 +71,7 @@ export const getAllDiscussions = async (req, res) => {
     });
 
   } catch (error) {
-    console.log("Error in getAllDiscussions controller:", error.message);
+    console.log("Error in getAllDiscussions:", error.message);
     res.status(500).json({
       success: false,
       message: "Internal server error",
@@ -150,6 +152,46 @@ export const addComment = async (req, res) => {
 
   } catch (error) {
     console.log("Error in addComment controller:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+export const getSingleDiscussion = async (req, res) => {
+  try {
+    const { discussionId } = req.params;
+
+    const discussion = await Discussion.findById(discussionId)
+      .populate("creator", "username profileImg")
+      .populate({
+        path: "comment",
+        populate: {
+          path: "user",
+          select: "username profileImg",
+        },
+      });
+
+    
+    if (!discussion) {
+      return res.status(404).json({
+        success: false,
+        message: "Discussion not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Single discussion",
+      discussion,
+    });
+  } catch (error) {
+    console.log(
+      "Error in getSingleDiscussion:",
+      error.message
+    );
+
     res.status(500).json({
       success: false,
       message: "Internal server error",
@@ -275,7 +317,7 @@ export const userDiscussion = async (req, res) => {
   try {
     const userId = req.user._id;
 
-    const discussions = await Discussion.find({ user: userId }).sort({ createdAt: -1 });
+    const discussions = await Discussion.find({ creator: userId }).sort({ createdAt: -1 });
 
     if (!discussions) {
       return res.status(404).json({
