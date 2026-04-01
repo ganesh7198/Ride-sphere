@@ -15,10 +15,9 @@ dotenv.config();
 
 const app = express();
 
-// ✅ Create HTTP server
+
 const server = createServer(app);
 
-// ✅ Attach Socket.IO to server
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:5173",
@@ -26,7 +25,7 @@ const io = new Server(server, {
   },
 });
 
-// 🔥 Socket logic
+
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
@@ -40,7 +39,6 @@ io.on("connection", (socket) => {
   });
 });
 
-// ✅ Export io (for controller use)
 export { io };
 
 app.use(
@@ -54,7 +52,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Routes
 app.use("/api/v1/auth", authroutes);
 app.use("/api/v1/ride", rideroutes);
 app.use("/api/v1/post", postrouter);

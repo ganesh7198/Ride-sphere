@@ -13,6 +13,7 @@ import PostSection from "../components/PostSection";
 import DetailedDisccussion from "../cards/DetailedDisccussion";
 import Notification from "../pages/Notification"
 import ActivityPage from "../pages/ActivityPage";
+import CreatePage from "../pages/CreatePage";
 
 function App() {
   const { user, loading } = useContext(AuthContext);
@@ -73,6 +74,7 @@ function App() {
         <Route path="discussion/:id" element={<DetailedDisccussion></DetailedDisccussion>}></Route>
         <Route path="notifications" element={<Notification></Notification>}></Route>
         <Route path="activity" element={<ActivityPage></ActivityPage>}></Route>
+        <Route   path="create" element={<CreatePage></CreatePage>}></Route>
       </Route>
     </Routes>
   );

@@ -107,7 +107,7 @@ export const createRideController = async (req, res) => {
       estimatedDuration: routeData.durationInMinutes,
       rideImage: mapUrl,
 
-      joinedRiders:userId, 
+      joinedRiders:[userId], 
     });
 
     return res.status(201).json({

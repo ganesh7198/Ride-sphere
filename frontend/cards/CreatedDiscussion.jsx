@@ -29,13 +29,13 @@ function CreatedDiscussion() {
   }, []);
 
   // 🔥 Delete discussion
-  const handleDelete = async (id) => {
+  const handleDelete = async (discussionId) => {
     try {
-      await axios.delete(`${BASE_URL}/discussion/${id}`, {
+      await axios.delete(`${BASE_URL}/discussion/${discussionId}`, {
         withCredentials: true,
       });
 
-      setDiscussions((prev) => prev.filter((d) => d._id !== id));
+      setDiscussions((prev) => prev.filter((d) => d._id !== discussionId));
     } catch (error) {
       console.error(error);
     }

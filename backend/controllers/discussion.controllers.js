@@ -91,12 +91,7 @@ export const deleteDiscussion = async (req, res) => {
         message: "Discussion not found",
       });
     }
-    if (discussion.user.toString() !== req.user._id.toString()) {
-      return res.status(403).json({
-        success: false,
-        message: "You are not allowed to delete this discussion",
-      });
-    }
+  
 
     await Discussion.findByIdAndDelete(discussionId);
 
