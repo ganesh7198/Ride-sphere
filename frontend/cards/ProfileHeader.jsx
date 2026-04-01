@@ -159,19 +159,21 @@ function ProfileHeader({ userId }) {
               </button>
             </div>
           ) : (
-           
+            
             <img
               src={user.profileImg || "/default-avatar.png"}
               alt={user.username}
               className="w-20 h-20 md:w-36 md:h-36 rounded-full object-cover border-2 border-gray-200"
             />
           )}
-      
+        </div>
+
+       
         <div className="flex-1">
-   
+        
           <div className="flex flex-wrap items-center gap-4 mb-4">
             {isEditing ? (
-           
+             
               <h2 className="text-xl md:text-2xl font-light">
                 {user.username}
               </h2>
@@ -181,7 +183,6 @@ function ProfileHeader({ userId }) {
               </h2>
             )}
 
-          
             {!isOwnProfile && !isEditing && (
               <button
                 onClick={handleFollow}
@@ -195,7 +196,7 @@ function ProfileHeader({ userId }) {
               </button>
             )}
 
-           
+         
             {isOwnProfile && !isEditing && (
               <button
                 onClick={() => setIsEditing(true)}
@@ -205,7 +206,7 @@ function ProfileHeader({ userId }) {
               </button>
             )}
 
-         
+     
             {isEditing && (
               <div className="flex gap-2">
                 <button
@@ -217,7 +218,7 @@ function ProfileHeader({ userId }) {
                 <button
                   onClick={() => {
                     setIsEditing(false);
-              
+                  
                     setEditData({
                       fullName: user.fullName || "",
                       bio: user.bio || "",
@@ -232,7 +233,7 @@ function ProfileHeader({ userId }) {
             )}
           </div>
 
-          
+
           <div className="flex gap-6 mb-4">
             <div>
               <span className="font-semibold">{user.posts?.length || 0}</span>
@@ -254,7 +255,7 @@ function ProfileHeader({ userId }) {
 
           <div>
             {isEditing ? (
-           
+             
               <div className="space-y-2">
                 <input
                   type="text"
@@ -274,7 +275,7 @@ function ProfileHeader({ userId }) {
                 />
               </div>
             ) : (
-             
+              
               <>
                 <p className="font-semibold text-sm">{user.fullName}</p>
                 <p className="text-gray-600 text-sm mt-1">{user.bio}</p>
