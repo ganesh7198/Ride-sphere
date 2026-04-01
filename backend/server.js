@@ -1,7 +1,8 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { connectDb } from "./config/db.js";
 import authroutes from "./routes/auth.routes.js";
@@ -11,7 +12,6 @@ import postrouter from "./routes/post.routes.js";
 import discussionroutes from "./routes/discussion.routes.js";
 import cors from "cors";
 
-dotenv.config();
 
 const app = express();
 
