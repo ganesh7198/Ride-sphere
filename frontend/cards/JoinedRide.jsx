@@ -18,7 +18,7 @@ function JoinedRide() {
 
   const [joining, setJoining] = useState(false);
 
-  // 🔥 Fetch all joined rides
+  
   const fetchRides = async () => {
     try {
       const { data } = await axios.get(`${BASE_URL}/ride/user/joined`, {
@@ -27,7 +27,6 @@ function JoinedRide() {
 
       setRides(data.rides);
 
-      // store messages per ride
       const msgMap = {};
       data.rides.forEach((r) => {
         msgMap[r._id] = r.comments || [];
@@ -44,7 +43,6 @@ function JoinedRide() {
     fetchRides();
   }, []);
 
-  // 🔥 SOCKET for active chat ride
   useEffect(() => {
     if (!activeChatRideId) return;
 
@@ -71,7 +69,6 @@ function JoinedRide() {
     return () => socket.off("newMessage");
   }, [activeChatRideId]);
 
-  // 🔥 Send message
   const sendMessage = async () => {
     if (!text.trim() || !activeChatRideId) return;
 
@@ -88,7 +85,7 @@ function JoinedRide() {
     }
   };
 
-  // 🔥 Leave ride
+  
   const handleLeaveRide = async (rideId) => {
     try {
       setJoining(true);
@@ -100,7 +97,7 @@ function JoinedRide() {
       );
 
       if (data.success) {
-        // remove ride from UI
+   
         setRides((prev) => prev.filter((r) => r._id !== rideId));
       }
     } catch (error) {
@@ -122,7 +119,7 @@ function JoinedRide() {
           key={ride._id}
           className="bg-white rounded-xl shadow overflow-hidden"
         >
-          {/* 🗺️ Map */}
+      
           <RideMap ride={ride} />
 
           <div className="p-4 space-y-3">
@@ -146,7 +143,6 @@ function JoinedRide() {
 
             <p>{ride.description}</p>
 
-            {/* 🔘 Buttons */}
             <div className="flex gap-3">
               <button
                 onClick={() => handleLeaveRide(ride._id)}
@@ -168,7 +164,6 @@ function JoinedRide() {
               </button>
             </div>
 
-            {/* 💬 Chat */}
             {activeChatRideId === ride._id && (
               <div className="mt-4 border rounded-lg flex flex-col h-80">
                 <div className="flex justify-between p-2 border-b">

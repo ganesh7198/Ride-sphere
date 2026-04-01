@@ -9,7 +9,7 @@ function CreateDiscussion() {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // 🔥 image preview
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImg(file);
@@ -48,7 +48,7 @@ function CreateDiscussion() {
 
       alert("Discussion created successfully ✅");
 
-      // reset
+      
       setTitle("");
       setDescription("");
       setImg(null);
@@ -63,7 +63,7 @@ function CreateDiscussion() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Title */}
+   
       <input
         type="text"
         placeholder="Enter discussion title..."
@@ -72,7 +72,7 @@ function CreateDiscussion() {
         className="w-full border p-2 rounded"
       />
 
-      {/* Description */}
+    
       <textarea
         placeholder="Write your thoughts..."
         value={description}
@@ -80,10 +80,10 @@ function CreateDiscussion() {
         className="w-full border p-2 rounded"
       />
 
-      {/* Image Upload */}
+  
       <input type="file" onChange={handleImageChange} />
 
-      {/* Preview */}
+ 
       {preview && (
         <img
           src={preview}
@@ -92,7 +92,7 @@ function CreateDiscussion() {
         />
       )}
 
-      {/* Button */}
+   
       <button
         type="submit"
         className="bg-purple-500 text-white px-4 py-2 rounded w-full"

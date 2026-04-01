@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import L from "leaflet";
 import "leaflet-routing-machine";
 
-// Fix marker icons
+
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet/dist/images/marker-icon-2x.png",
@@ -11,7 +11,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet/dist/images/marker-shadow.png",
 });
 
-// 🔥 Routing Component
+
 function Routing({ start, end }) {
   const map = useMap();
 
@@ -35,7 +35,6 @@ function Routing({ start, end }) {
   return null;
 }
 
-// 🔄 Reset Button
 function ResetButton({ center, zoom }) {
   const map = useMap();
 
@@ -95,7 +94,6 @@ function RideMap({ ride }) {
         {/* ✅ REAL ROAD ROUTE */}
         <Routing start={start} end={end} />
 
-        {/* 🔄 Reset Button */}
         <ResetButton center={center} zoom={zoom} />
       </MapContainer>
     </div>

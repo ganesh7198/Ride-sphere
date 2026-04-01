@@ -19,7 +19,7 @@ function CreatedRide() {
   const [editingRideId, setEditingRideId] = useState(null);
   const [editForm, setEditForm] = useState({});
 
-  // 🔥 Fetch created rides
+ 
   const fetchRides = async () => {
     try {
       const { data } = await axios.get(`${BASE_URL}/ride/user/created`, {
@@ -44,7 +44,7 @@ function CreatedRide() {
     fetchRides();
   }, []);
 
-  // 🔥 SOCKET CHAT
+
   useEffect(() => {
     if (!activeChatRideId) return;
 
@@ -64,7 +64,7 @@ function CreatedRide() {
     return () => socket.off("newMessage");
   }, [activeChatRideId]);
 
-  // 🔥 SEND MESSAGE
+  
   const sendMessage = async () => {
     if (!text.trim()) return;
 
@@ -77,7 +77,7 @@ function CreatedRide() {
     setText("");
   };
 
-  // 🔥 DELETE RIDE
+
   const handleDelete = async (rideId) => {
     try {
       await axios.delete(`${BASE_URL}/ride/delete/${rideId}`, {
@@ -90,7 +90,7 @@ function CreatedRide() {
     }
   };
 
-  // 🔥 EDIT START
+
   const handleEdit = (ride) => {
     setEditingRideId(ride._id);
     setEditForm({
@@ -102,7 +102,7 @@ function CreatedRide() {
     });
   };
 
-  // 🔥 UPDATE RIDE
+  
   const handleUpdate = async (rideId) => {
     try {
       const { data } = await axios.put(
@@ -125,7 +125,7 @@ function CreatedRide() {
     <div className="max-w-7xl mx-auto p-6 space-y-6">
       {rides.map((ride) => (
         <div key={ride._id} className="flex gap-4">
-          {/* LEFT CARD */}
+      
           <div className="flex-1 bg-white rounded-xl shadow overflow-hidden">
             <RideMap ride={ride} />
 
@@ -205,7 +205,7 @@ function CreatedRide() {
             </div>
           </div>
 
-          {/* RIGHT CHAT PANEL */}
+         
           {activeChatRideId === ride._id && (
             <div className="w-96 bg-white rounded-xl shadow flex flex-col h-[500px]">
               <div className="flex justify-between p-3 border-b">

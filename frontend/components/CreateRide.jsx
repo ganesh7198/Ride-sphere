@@ -15,7 +15,6 @@ function CreateRide() {
 
   const [loading, setLoading] = useState(false);
 
-  // 🔥 handle input change
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -23,7 +22,7 @@ function CreateRide() {
     });
   };
 
-  // 🔥 submit form
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -37,7 +36,7 @@ function CreateRide() {
       if (data.success) {
         alert("Ride created successfully 🚀");
 
-        // reset form
+    
         setForm({
           tittle: "",
           startLocationAddress: "",
@@ -63,7 +62,6 @@ function CreateRide() {
     >
       <h2 className="text-xl font-bold">Create Ride</h2>
 
-      {/* Title */}
       <input
         name="tittle"
         value={form.tittle}
@@ -72,7 +70,6 @@ function CreateRide() {
         className="w-full border p-2 rounded"
       />
 
-      {/* Start Location */}
       <input
         name="startLocationAddress"
         value={form.startLocationAddress}
@@ -81,7 +78,7 @@ function CreateRide() {
         className="w-full border p-2 rounded"
       />
 
-      {/* End Location */}
+      
       <input
         name="endLocationAddress"
         value={form.endLocationAddress}
@@ -90,8 +87,7 @@ function CreateRide() {
         className="w-full border p-2 rounded"
       />
 
-      {/* Ride Type */}
-      <input
+       <input
         name="rideType"
         value={form.rideType}
         onChange={handleChange}
@@ -99,7 +95,7 @@ function CreateRide() {
         className="w-full border p-2 rounded"
       />
 
-      {/* Max Riders */}
+     
       <input
         type="number"
         name="maxRiders"
@@ -109,7 +105,7 @@ function CreateRide() {
         className="w-full border p-2 rounded"
       />
 
-      {/* Date */}
+      
       <input
         type="date"
         name="rideDate"
@@ -118,7 +114,6 @@ function CreateRide() {
         className="w-full border p-2 rounded"
       />
 
-      {/* Description */}
       <textarea
         name="description"
         value={form.description}
@@ -127,7 +122,7 @@ function CreateRide() {
         className="w-full border p-2 rounded"
       />
 
-      {/* Submit */}
+     
       <button
         type="submit"
         disabled={loading}

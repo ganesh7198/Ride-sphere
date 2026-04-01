@@ -8,7 +8,7 @@ import {
   FiClock,
 } from "react-icons/fi";
 
-const BASE_URL = "http://localhost:2000/api/v1";
+const BASE_URL = "https://ride-sphere-1.onrender.com/api/v1";
 
 function AllDiscussion() {
   const [discussions, setDiscussions] = useState([]);
@@ -67,12 +67,12 @@ function AllDiscussion() {
         return (
           <div key={d._id} className="bg-white rounded-lg shadow-sm flex">
            
-            {/* CONTENT */}
+        
             <div
               onClick={() => navigate(`discussion/${d._id}`)}
               className="flex-1 p-4 cursor-pointer"
             >
-              {/* USER */}
+              
               <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
                 <div
                   onClick={(e) => {
@@ -100,17 +100,14 @@ function AllDiscussion() {
                 </div>
               </div>
 
-              {/* TITLE */}
               <h2 className="font-semibold text-gray-900 mb-1">{d.title}</h2>
 
-              {/* DESCRIPTION */}
               {d.description && (
                 <p className="text-sm text-gray-600 mb-2 line-clamp-2">
                   {d.description}
                 </p>
               )}
 
-              {/* COMMENTS */}
               <div className="text-xs text-gray-500 flex items-center gap-1">
                 <FiMessageCircle size={14} />
                 {d.comment?.length || 0} comments

@@ -9,7 +9,7 @@ function RideActivity() {
     <div className="max-w-2xl mx-auto mt-6 px-4">
       <h1 className="text-2xl font-bold mb-4">Ride Activity</h1>
 
-      {/* 🔥 Tabs */}
+ 
       <div className="flex gap-6 border-b mb-6">
         <button
           onClick={() => setActiveTab("created")}

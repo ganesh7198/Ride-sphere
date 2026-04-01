@@ -12,7 +12,7 @@ function Navbar() {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  // Handle scroll effect for sticky navbar
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
@@ -35,7 +35,7 @@ function Navbar() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  // Logout
+
   const handleLogout = async () => {
     try {
       await axios.post(
@@ -60,7 +60,7 @@ function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* LEFT: BRAND */}
+         
           <Link to="/home" className="flex items-center group">
             <h1 className="text-xl md:text-2xl font-bold tracking-tight">
               <span className="text-gray-800">Ride</span>
@@ -69,7 +69,7 @@ function Navbar() {
               </span>
             </h1>
           </Link>
-          {/* RIGHT: PROFILE DROPDOWN */}
+        
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setOpen(!open)}
@@ -93,10 +93,10 @@ function Navbar() {
               />
             </button>
 
-            {/* DROPDOWN MENU */}
+      
             {open && (
               <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50 animate-slideDown">
-                {/* User Info Section */}
+           
                 <div className="px-4 py-3 border-b border-gray-100">
                   <div className="flex items-center gap-3">
                     <img
@@ -119,7 +119,6 @@ function Navbar() {
                   </div>
                 </div>
 
-                {/* Menu Items */}
                 <div className="py-1">
                   <button
                     onClick={() => {
@@ -133,10 +132,10 @@ function Navbar() {
                   </button>
                 </div>
 
-                {/* Divider */}
+         
                 <div className="my-1 border-t border-gray-100"></div>
 
-                {/* Logout Button */}
+             
                 <div className="py-1">
                   <button
                     onClick={handleLogout}
@@ -152,7 +151,7 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Animation Styles */}
+ 
       <style>{`
         @keyframes slideDown {
           from {

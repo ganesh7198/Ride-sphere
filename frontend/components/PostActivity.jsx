@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:2000/api/v1";
+const BASE_URL = "https://ride-sphere-1.onrender.com/api/v1";
 
 function PostActivity() {
   const [posts, setPosts] = useState([]);
@@ -10,7 +10,7 @@ function PostActivity() {
   const [editingPostId, setEditingPostId] = useState(null);
   const [editText, setEditText] = useState("");
 
-  // 🔥 Fetch posts
+
   const fetchPosts = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/post/allpostbyuser`, {
@@ -28,7 +28,6 @@ function PostActivity() {
     fetchPosts();
   }, []);
 
-  // 🔥 Delete
   const handleDelete = async (postId) => {
     if (!window.confirm("Delete this post?")) return;
 
@@ -43,13 +42,13 @@ function PostActivity() {
     }
   };
 
-  // 🔥 Start Edit
+
   const handleEditClick = (post) => {
     setEditingPostId(post._id);
-    setEditText(post.text); // ✅ FIXED
+    setEditText(post.text); 
   };
 
-  // 🔥 Update
+  
   const handleUpdate = async (postId) => {
     try {
       await axios.post(
@@ -86,7 +85,7 @@ function PostActivity() {
                 isEditing ? "border-blue-500 bg-blue-50" : "bg-white"
               }`}
             >
-              {/* 🖼️ Image Preview */}
+            
               {post.img && (
                 <img
                   src={post.img}
@@ -95,16 +94,16 @@ function PostActivity() {
                 />
               )}
 
-              {/* 📝 Text */}
+            
               <p className="text-gray-800">{post.text}</p>
 
-              {/* ❤️ Likes + 💬 Comments */}
+            
               <div className="flex gap-4 text-sm text-gray-500 mt-2">
                 <span>❤️ {post.likes.length} likes</span>
                 <span>💬 {post.comment.length} comments</span>
               </div>
 
-              {/* 🔘 Buttons */}
+      
               <div className="flex gap-3 mt-3">
                 <button
                   onClick={() => handleEditClick(post)}
@@ -121,14 +120,14 @@ function PostActivity() {
                 </button>
               </div>
 
-              {/* ✏️ Edit Section */}
+              
               {isEditing && (
                 <div className="mt-4 border-t pt-3">
                   <p className="text-xs text-blue-600 mb-1">
                     Editing this post
                   </p>
 
-                  {/* show image while editing */}
+              
                   <div className="max-h-100 overflow-hidden relative">
                     <img
                       src={post.img}

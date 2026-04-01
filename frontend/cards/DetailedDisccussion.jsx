@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FiArrowUp, FiUser, FiMessageCircle } from "react-icons/fi";
 
-const BASE_URL = "http://localhost:2000/api/v1";
+const BASE_URL = "https://ride-sphere-1.onrender.com/api/v1";
 
 function DetailedDiscussion() {
   const { id } = useParams();
@@ -36,15 +36,15 @@ function DetailedDiscussion() {
     }
   };
 
-  // ✅ AUTO SCROLL TO NEW COMMENT
+
   useEffect(() => {
     commentEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [discussion?.comment]);
 
-  // ✅ CHECK IF USER UPVOTED
+  
   const isUpvoted = discussion?.upvotes?.includes(user?._id);
 
-  // ✅ UPVOTE
+  
   const handleUpvote = async () => {
     if (!user) return alert("Login required");
 
@@ -64,7 +64,7 @@ function DetailedDiscussion() {
     }
   };
 
-  // ✅ COMMENT
+  
   const handleComment = async () => {
     if (!text.trim()) return;
     if (!user) return alert("Login required");
@@ -78,7 +78,7 @@ function DetailedDiscussion() {
         { withCredentials: true }
       );
 
-      // instant UI update
+    
       setDiscussion((prev) => ({
         ...prev,
         comment: [...prev.comment, data.comment],
@@ -106,10 +106,10 @@ function DetailedDiscussion() {
 
   return (
     <div className="max-w-3xl mx-auto p-4 space-y-6">
-      {/* DISCUSSION */}
+     
       <div className="bg-white p-4 rounded-lg shadow-sm">
         <div className="flex gap-3">
-          {/* UPVOTE */}
+         
           <div className="flex flex-col items-center">
             <button
               onClick={handleUpvote}
@@ -126,9 +126,8 @@ function DetailedDiscussion() {
             </span>
           </div>
 
-          {/* CONTENT */}
           <div className="flex-1">
-            {/* USER */}
+          
             <div
               onClick={() =>
                 navigate(`/home/profile/${discussion.creator._id}`)
@@ -146,12 +145,12 @@ function DetailedDiscussion() {
               <span>{discussion.creator?.username}</span>
             </div>
 
-            {/* TITLE */}
+          
             <h1 className="text-xl font-bold mt-2">
               {discussion.title}
             </h1>
 
-            {/* DESCRIPTION */}
+           
             {discussion.description && (
               <p className="text-gray-600 mt-2">
                 {discussion.description}
@@ -161,7 +160,7 @@ function DetailedDiscussion() {
         </div>
       </div>
 
-      {/* COMMENT INPUT */}
+     
       <div className="bg-white p-4 rounded-lg shadow-sm">
         <div className="flex gap-2">
           <input
@@ -180,7 +179,7 @@ function DetailedDiscussion() {
         </div>
       </div>
 
-      {/* COMMENTS */}
+   
       <div className="space-y-4">
         <h2 className="font-semibold text-gray-700 flex items-center gap-2">
           <FiMessageCircle />
@@ -192,7 +191,7 @@ function DetailedDiscussion() {
             key={c._id}
             className="bg-white p-4 rounded-lg shadow-sm transition hover:shadow-md"
           >
-            {/* USER */}
+         
             <div
               onClick={() => navigate(`/home/profile/${c.user._id}`)}
               className="flex items-center gap-2 cursor-pointer mb-2"
@@ -210,12 +209,12 @@ function DetailedDiscussion() {
               </span>
             </div>
 
-            {/* TEXT */}
+          
             <p className="text-gray-700 text-sm">{c.text}</p>
           </div>
         ))}
 
-        {/* scroll target */}
+        
         <div ref={commentEndRef} />
       </div>
     </div>

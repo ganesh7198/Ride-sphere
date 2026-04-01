@@ -11,9 +11,9 @@ function LandingPage() {
         }
       `}</style>
 
-      {/* MAIN CONTAINER — full screen */}
+      
       <div className="w-full h-screen flex flex-col bg-[#faf6ed]">
-        {/* NAVBAR — fixed at the top */}
+      
         <div className="flex items-center justify-between px-6 py-4 md:px-10 lg:px-16 border-b border-stone-200/70">
           <h1 className="text-2xl font-light tracking-wide text-stone-700">
             Ride<span className="font-medium text-amber-700">Sphere</span>
@@ -28,9 +28,9 @@ function LandingPage() {
           </div>
         </div>
 
-        {/* CONTENT ROW — image left (reduced), text right */}
+      
         <div className="flex-1 flex flex-col md:flex-row">
-          {/* LEFT SIDE — IMAGE (smaller) */}
+      
           <div className="md:w-2/5 h-64 md:h-full flex items-center justify-center p-4 md:p-6 lg:p-8">
             <div className="w-full h-full rounded-2xl overflow-hidden shadow-md">
               <img
@@ -41,9 +41,8 @@ function LandingPage() {
             </div>
           </div>
 
-          {/* RIGHT SIDE — TEXT CONTENT (takes remaining space) */}
           <div className="md:w-3/5 flex flex-col justify-center px-6 md:px-10 lg:px-16 py-6 md:py-0">
-            {/* MAIN HEADLINE */}
+
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-stone-800 leading-tight">
               Your Next Adventure Awaits
             </h2>
@@ -55,7 +54,7 @@ function LandingPage() {
         </div>
       </div>
       <div className="flex-1 flex flex-col md:flex-row-reverse">
-        {/* IMAGE — now on RIGHT */}
+      
         <div className="md:w-2/5 h-64 md:h-full flex items-center justify-center p-4 md:p-6 lg:p-8">
           <div className="w-full h-full rounded-2xl overflow-hidden shadow-md">
             <img
@@ -66,7 +65,7 @@ function LandingPage() {
           </div>
         </div>
 
-        {/* TEXT — now on LEFT */}
+      
         <div className="md:w-3/5 flex flex-col justify-center px-6 md:px-10 lg:px-16 py-6 md:py-0">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-stone-800 leading-tight">
             “Document your rides and let others ride along with you.”

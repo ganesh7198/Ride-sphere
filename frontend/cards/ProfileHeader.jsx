@@ -4,28 +4,28 @@ import { BASE_URL, API_PATHS } from "../utils/Apipath";
 import { AuthContext } from "../context/AuthContext";
 
 function ProfileHeader({ userId }) {
-  // State for storing user profile data
+  
   const [user, setUser] = useState(null);
-  // State for tracking if current logged-in user is following this profile
+ 
   const [isFollowing, setIsFollowing] = useState(false);
-  // State for edit mode
+  
   const [isEditing, setIsEditing] = useState(false);
-  // State for edit form data
+ 
   const [editData, setEditData] = useState({
     fullName: "",
     bio: "",
     profileImg: "",
   });
 
-  // Get logged in user from context
+  
   const { user: loggedInUser } = useContext(AuthContext);
 
-  // Fetch user profile when userId changes
+
   useEffect(() => {
     fetchUser();
   }, [userId]);
 
-  // Function to fetch user profile data
+ 
   const fetchUser = async () => {
     try {
       const res = await axios.get(
@@ -36,14 +36,13 @@ function ProfileHeader({ userId }) {
       const profileUser = res.data.user;
       setUser(profileUser);
 
-      // Initialize edit form data
       setEditData({
         fullName: profileUser.fullName || "",
         bio: profileUser.bio || "",
         profileImg: profileUser.profileImg || "",
       });
 
-      // Check if logged in user is following this profile
+  
       if (profileUser.followers?.includes(loggedInUser?._id)) {
         setIsFollowing(true);
       } else {
@@ -54,31 +53,30 @@ function ProfileHeader({ userId }) {
     }
   };
 
-  // Handle follow/unfollow
   const handleFollow = async () => {
     try {
       if (isFollowing) {
-        // Unfollow API call
+  
         await axios.post(
           `${BASE_URL}${API_PATHS.AUTH.UNFOLLOW(userId)}`,
           {},
           { withCredentials: true }
         );
         setIsFollowing(false);
-        // Update local state
+        
         setUser((prev) => ({
           ...prev,
           followers: prev.followers.filter((id) => id !== loggedInUser?._id),
         }));
       } else {
-        // Follow API call
+       
         await axios.post(
           `${BASE_URL}${API_PATHS.AUTH.FOLLOW(userId)}`,
           {},
           { withCredentials: true }
         );
         setIsFollowing(true);
-        // Update local state
+      
         setUser((prev) => ({
           ...prev,
           followers: [...prev.followers, loggedInUser?._id],
@@ -89,7 +87,7 @@ function ProfileHeader({ userId }) {
     }
   };
 
-  // Handle edit profile update
+ 
   const handleUpdateProfile = async () => {
     try {
       const res = await axios.put(
@@ -98,7 +96,6 @@ function ProfileHeader({ userId }) {
         { withCredentials: true }
       );
 
-      // Update user state with new data
       setUser(res.data.user);
       setIsEditing(false);
     } catch (err) {
@@ -106,7 +103,7 @@ function ProfileHeader({ userId }) {
     }
   };
 
-  // Handle input changes in edit form
+
   const handleEditChange = (e) => {
     const { name, value } = e.target;
     setEditData((prev) => ({
@@ -115,7 +112,6 @@ function ProfileHeader({ userId }) {
     }));
   };
 
-  // Loading state
   if (!user)
     return (
       <div className="flex justify-center items-center py-12">
@@ -123,17 +119,17 @@ function ProfileHeader({ userId }) {
       </div>
     );
 
-  // Check if viewing own profile
+ 
   const isOwnProfile = loggedInUser?._id === user._id;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Profile Header - Instagram Style */}
+   
       <div className="flex gap-8 md:gap-16 items-center">
-        {/* Profile Image Section */}
+       
         <div className="flex-shrink-0">
           {isEditing ? (
-            // Edit mode - show image upload
+         
             <div className="relative">
               <img
                 src={editData.profileImg || "https://api.dicebear.com/7.x/initials/svg?seed=User"}
@@ -163,21 +159,19 @@ function ProfileHeader({ userId }) {
               </button>
             </div>
           ) : (
-            // View mode - show profile image
+           
             <img
               src={user.profileImg || "/default-avatar.png"}
               alt={user.username}
               className="w-20 h-20 md:w-36 md:h-36 rounded-full object-cover border-2 border-gray-200"
             />
           )}
-        </div>
-
-        {/* Profile Info Section */}
+      
         <div className="flex-1">
-          {/* Username and Action Buttons */}
+   
           <div className="flex flex-wrap items-center gap-4 mb-4">
             {isEditing ? (
-              // Edit mode - show input for username? (usually username is not editable)
+           
               <h2 className="text-xl md:text-2xl font-light">
                 {user.username}
               </h2>
@@ -187,7 +181,7 @@ function ProfileHeader({ userId }) {
               </h2>
             )}
 
-            {/* Show Follow button for other profiles */}
+          
             {!isOwnProfile && !isEditing && (
               <button
                 onClick={handleFollow}
@@ -201,7 +195,7 @@ function ProfileHeader({ userId }) {
               </button>
             )}
 
-            {/* Show Edit Profile button for own profile */}
+           
             {isOwnProfile && !isEditing && (
               <button
                 onClick={() => setIsEditing(true)}
@@ -211,7 +205,7 @@ function ProfileHeader({ userId }) {
               </button>
             )}
 
-            {/* Show Save/Cancel buttons in edit mode */}
+         
             {isEditing && (
               <div className="flex gap-2">
                 <button
@@ -223,7 +217,7 @@ function ProfileHeader({ userId }) {
                 <button
                   onClick={() => {
                     setIsEditing(false);
-                    // Reset edit data to original user data
+              
                     setEditData({
                       fullName: user.fullName || "",
                       bio: user.bio || "",
@@ -238,7 +232,7 @@ function ProfileHeader({ userId }) {
             )}
           </div>
 
-          {/* Stats Section - Shows posts, followers, following counts */}
+          
           <div className="flex gap-6 mb-4">
             <div>
               <span className="font-semibold">{user.posts?.length || 0}</span>
@@ -258,10 +252,9 @@ function ProfileHeader({ userId }) {
             </div>
           </div>
 
-          {/* Name and Bio Section */}
           <div>
             {isEditing ? (
-              // Edit mode - form inputs for fullName and bio
+           
               <div className="space-y-2">
                 <input
                   type="text"
@@ -281,7 +274,7 @@ function ProfileHeader({ userId }) {
                 />
               </div>
             ) : (
-              // View mode - display fullName and bio
+             
               <>
                 <p className="font-semibold text-sm">{user.fullName}</p>
                 <p className="text-gray-600 text-sm mt-1">{user.bio}</p>

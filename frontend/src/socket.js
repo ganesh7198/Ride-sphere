@@ -1,6 +1,6 @@
-// socket.js
+
 import { io } from "socket.io-client";
 
-export const socket = io("http://localhost:2000", {
+export const socket = io("https://ride-sphere-1.onrender.com", {
   withCredentials: true,
 });

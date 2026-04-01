@@ -12,7 +12,7 @@ function AllPost() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 🔥 Fetch all posts
+  
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -89,7 +89,7 @@ function AllPost() {
             onClick={() => navigate(`post/${post._id}`)}
             className="bg-white p-4 rounded shadow cursor-pointer hover:shadow-md transition"
           >
-            {/* USER */}
+       
             <div className="flex items-center gap-2 mb-2">
               <img
                 src={post.user?.profileImg || "/default-avatar.png"}
@@ -98,10 +98,9 @@ function AllPost() {
               <span onClick={()=> navigate(`/home/profile/${post.user?._id}`)} className="text-sm font-medium hover:text-amber-600">{post.user?.username}</span>
             </div>
 
-            {/* TEXT */}
+      
             <p className="text-sm mb-2">{post.text}</p>
 
-            {/* IMAGE */}
             {post.img && (
               <img
                 src={post.img}
@@ -109,7 +108,6 @@ function AllPost() {
               />
             )}
 
-            {/* ACTIONS */}
             <div className="flex gap-4">
               <button
                 onClick={(e) => handleLike(e, post._id)}

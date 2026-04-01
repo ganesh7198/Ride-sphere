@@ -10,7 +10,6 @@ function CreatePage() {
     <div className="max-w-4xl mx-auto mt-6 px-4">
       <h1 className="text-2xl font-bold mb-6">Create</h1>
 
-      {/* 🔥 Tabs */}
       <div className="flex gap-4 border-b mb-6">
         {["ride", "post", "discussion"].map((tab) => (
           <button
@@ -27,7 +26,6 @@ function CreatePage() {
         ))}
       </div>
 
-      {/* 🔥 Content */}
       <div>
         {activeTab === "ride" && (
           <div>
