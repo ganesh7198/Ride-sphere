@@ -6,7 +6,7 @@ import HomePage from "../pages/HomePage";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import MainLayout from "../components/MainLayout";
-import DetailedRideCard from "../cards/detailedRideCard";
+import DetailedRideCard from "../cards/DetailedRideCard";
 import Profile from "../components/Profile";
 import MyProfile from "../pages/MyProfile";
 import PostSection from "../components/PostSection";
