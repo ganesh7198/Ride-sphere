@@ -7,7 +7,7 @@ function HomePage() {
   const [activeTab, setActiveTab] = useState("rides");
 
   return (
-  
+  <div>
       <div className="flex gap-6 border-b border-gray-200">
         {["rides", "posts", "discussions"].map((tab) => (
           <button
