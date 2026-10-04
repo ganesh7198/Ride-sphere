@@ -1,26 +1,19 @@
-# 🏍️ RideSphere - Biker Portal
+# RideSphere - Biker Portal
 
 RideSphere is a full-stack MERN application built for motorcycle enthusiasts to plan rides, connect with other riders, and manage their bikes in one place. The platform provides secure authentication, ride planning, bike management, discussions, notifications, and real-time communication.
 
 ---
 
-# 🚀 Features
+#Features
 
-### 🔐 Authentication
+#Authentication
 
 * User Registration & Login
 * JWT Authentication
 * Secure Password Hashing (bcrypt)
 * Protected Routes
 
-### 🏍️ Bike Garage
-
-* Add multiple bikes
-* Update bike information
-* Delete bikes
-* View personal garage
-
-### 🗺️ Ride Planner
+# Ride Planner
 
 * Create new rides
 * Join available rides
@@ -28,19 +21,19 @@ RideSphere is a full-stack MERN application built for motorcycle enthusiasts to 
 * Ride location using OpenStreetMap
 * Geocoding with Nominatim API
 
-### 💬 Real-Time Chat
+# Real-Time Chat
 
 * Live ride discussion
 * Socket.IO based messaging
 * Join ride-specific chat rooms
 
-### 🔔 Notifications
+# Notifications
 
 * Ride updates
 * Join requests
 * Important announcements
 
-### 👤 User Profile
+# User Profile
 
 * Update profile information
 * Upload profile image
@@ -48,9 +41,9 @@ RideSphere is a full-stack MERN application built for motorcycle enthusiasts to 
 
 ---
 
-# 🛠️ Tech Stack
+#  Tech Stack
 
-## Frontend
+# Frontend
 
 * React.js
 * React Router
@@ -86,9 +79,7 @@ RideSphere is a full-stack MERN application built for motorcycle enthusiasts to 
 
 ---
 
-# 📂 Project Structure
-
-```text
+#  Project Structure
 RideSphere/
 │
 ├── client/
@@ -108,42 +99,35 @@ RideSphere/
 │   └── socket/
 │
 └── README.md
-```
 
 ---
 
-# ⚙️ Installation
+# Installation
 
 ## Clone the repository
 
-```bash
 git clone <repository-url>
 cd RideSphere
-```
 
 ## Backend
 
-```bash
 cd server
 npm install
 npm run dev
-```
+
 
 ## Frontend
 
-```bash
 cd client
 npm install
 npm run dev
-```
 
 ---
 
-# 🔑 Environment Variables
+#  Environment Variables
 
 Create a `.env` file inside the **server** folder.
 
-```env
 PORT=2000
 
 MONGODB_URI=your_mongodb_connection
@@ -159,12 +143,9 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
 CLIENT_URL=http://localhost:5173
-```
-
 ---
 
-# 📡 API Overview
-
+#  API Overview
 ## Authentication
 
 * POST `/api/v1/auth/signup`
@@ -193,7 +174,7 @@ CLIENT_URL=http://localhost:5173
 
 ---
 
-# 📸 Screenshots
+#  Screenshots
 
 Add screenshots of:
 
@@ -208,7 +189,7 @@ Add screenshots of:
 
 ---
 
-# 🌟 Future Improvements
+#  Future Improvements
 
 * Mobile application
 * Route optimization
@@ -221,7 +202,7 @@ Add screenshots of:
 
 ---
 
-# 🤝 Contributing
+#  Contributing
 
 Contributions are welcome.
 
@@ -233,13 +214,13 @@ Contributions are welcome.
 
 ---
 
-# 📄 License
+#  License
 
 This project is licensed under the MIT License.
 
 ---
 
-# 👨‍💻 Author
+#  Author
 
 **Ganesh H**
 
