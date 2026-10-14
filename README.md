@@ -2,9 +2,6 @@
 
 RideSphere is a full-stack MERN application built for motorcycle enthusiasts to plan rides, connect with other riders, and manage their bikes in one place. The platform provides secure authentication, ride planning, bike management, discussions, notifications, and real-time communication.
 
----
-
-#Features
 
 #Authentication
 
@@ -38,8 +35,6 @@ RideSphere is a full-stack MERN application built for motorcycle enthusiasts to 
 * Update profile information
 * Upload profile image
 * Manage account
-
----
 
 #  Tech Stack
 
@@ -100,7 +95,6 @@ RideSphere/
 │
 └── README.md
 
----
 
 # Installation
 
@@ -122,7 +116,6 @@ cd client
 npm install
 npm run dev
 
----
 
 #  Environment Variables
 
@@ -143,7 +136,7 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
 CLIENT_URL=http://localhost:5173
----
+
 
 #  API Overview
 ## Authentication
